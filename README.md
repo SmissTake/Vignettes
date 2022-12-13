@@ -20,6 +20,8 @@ Si un utilisateur connecté ou non connecté clique sur un bloc, celui-ci s'agra
 
 Attention, si un son ou une vidéo est incorporée dans le bloc, le media devra se lancer automatiquement lors de l'ouverture du bloc. Une interface de contrôles du média sera affichée.
 
+## Utilisateur connecté ayant le rôle USER
+
 Une connection utilisateur sera requise pour accéder à l'interface d'admin.
 Un utilisateur normal se connectera avec un email et un mot de passe et pourra uploader du contenu. Son numéro unique lui sera affiché.
 
@@ -32,6 +34,7 @@ Au sein d'un bloc, il sera possible de rajouter :
 * Une courte description
 * Une catégorie (obligatoire)
 
+## Utilisateur connecté ayant le rôle ADMIN
 Un super utilisateur pourra :
 	- ajouter/modifier/désactiver/supprimer des catégories
 	- ajouter/modifier/désactiver un compte utilisateur
