@@ -31,6 +31,9 @@ class Medias
     #[ORM\JoinColumn(nullable: false)]
     private ?Status $status = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $path = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -92,6 +95,18 @@ class Medias
     public function setStatus(?Status $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getPath(): ?string
+    {
+        return $this->path;
+    }
+
+    public function setPath(string $path): self
+    {
+        $this->path = $path;
 
         return $this;
     }
