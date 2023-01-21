@@ -1,0 +1,42 @@
+easy_admin:
+    entities:
+        Users:
+            class: App\Entity\Users
+            form:
+                fields:
+                    - { property: 'username', type: 'text' }
+                    - { property: 'email', type: 'email' }
+                    - { property: 'password', type: 'password' }
+                    - { property: 'role', type: 'entity', class: App\Entity\Roles, label: 'User Role' }
+        
+        Categories:
+            class: App\Entity\Categories
+            form:
+                fields:
+                    - { property: 'name', type: 'text' }
+                    - { property: 'description', type: 'text' }
+                    - { property: 'status', type: 'entity', class: App\Entity\Status, label: 'Status' }
+        
+        Medias:
+            class: App\Entity\Medias
+            form:
+                fields:
+                    - { property: 'name', type: 'text' }
+                    - { property: 'description', type: 'text' }
+                    - { property: 'category', type: 'entity', class: App\Entity\Categories, label: 'Category' }
+                    - { property: 'status', type: 'entity', class: App\Entity\Status, label: 'Status' }
+
+        Roles:
+            class: App\Entity\Roles
+            form:
+                fields:
+                    - { property: 'name', type: 'text' }
+                    - { property: 'description', type: 'text' }
+                    - { property: 'status', type: 'entity', class: App\Entity\Status, label: 'Status' }
+
+        Status:
+            class: App\Entity\Status
+            form:
+                fields:
+                    - { property: 'name', type: 'text' }
+                    - { property: 'description', type: 'text' }
