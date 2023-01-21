@@ -23,6 +23,6 @@ class MediasCrudController extends AbstractCrudController
         yield AssociationField::new('user');
         yield AssociationField::new('category');
         yield AssociationField::new('status');
-
+        yield TextField::new('path');
     }
 }
