@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div>
+    <img src="medias/images/{{ media.path }}" alt="" class="img-fluid" loading="lazy">
+    <h2>{{ media.title }}</h2>
+    <a href="/user/{{ media.user }}">{{ media.user }}</a>
+    <p>{{ media.description }}</p>
+</div>
+{% endblock %}
