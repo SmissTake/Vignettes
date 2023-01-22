@@ -1,9 +1,18 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-<div>
+<!-- The button to open modal -->
+<label for="my-modal-4" class="">
     <img src="medias/images/{{ media.path }}" alt="" class="img-fluid" loading="lazy">
-    <h2>{{ media.title }}</h2>
+</label>
+
+<!-- Put this part before </body> tag -->
+<input type="checkbox" id="my-modal-4" class="modal-toggle" />
+<label for="my-modal-4" class="modal cursor-pointer">
+  <label class="modal-box relative" for="">
+    <img src="medias/images/{{ media.path }}" alt="" class="img-fluid" loading="lazy">
+    <h3 class="text-lg font-bold">{{ media.title }}</h3>
     <a href="/user/{{ media.user }}">{{ media.user }}</a>
-    <p>{{ media.description }}</p>
-</div>
+    <p class="py-4">{{ media.description }}</p>
+  </label>
+</label>
 {% endblock %}
