@@ -7,6 +7,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 
 class MediasCrudController extends AbstractCrudController
 {
@@ -23,6 +24,8 @@ class MediasCrudController extends AbstractCrudController
         yield AssociationField::new('user');
         yield AssociationField::new('category');
         yield AssociationField::new('status');
-        yield TextField::new('path');
+        yield ImageField::new('path')
+            ->setBasePath('/medias/images/')
+            ->setUploadDir('public/medias/images/');
     }
 }

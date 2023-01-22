@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\MediasRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: MediasRepository::class)]
 class Medias
@@ -32,6 +33,7 @@ class Medias
     private ?Status $status = null;
 
     #[ORM\Column(length: 255)]
+    #[Vich\UploadableField(mapping: 'medias', fileNameProperty: 'path')]
     private ?string $path = null;
 
     public function getId(): ?int
