@@ -2,10 +2,10 @@
 
 {% block title %}Hello HomePageController!{% endblock %}
 
-{% block body %}
-<div class="columns-3 md:columns-4 lg:columns-6">
-    {% for media in medias %}
-        {% include 'components/media.html.twig' with {'media': media} %}
-    {% endfor %}
-</div>
+{% block body %}    
+    <div class="columns-3 md:columns-4 lg:columns-6 mx-20 pt-20">
+        {% for media in medias %}
+            {% include 'components/media.html.twig' with {'media': media} %}
+        {% endfor %}
+    </div>
 {% endblock %}
