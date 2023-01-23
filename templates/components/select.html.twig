@@ -1,0 +1,10 @@
+{% block body %}
+
+<select required class="select w-full max-w-xs">
+  <option disabled selected>Categorie</option>
+    {% for category in categories %}
+      <option value="{{ category.id }}">{{ category.name }}</option>
+    {% endfor %}
+</select>
+
+{% endblock %}
