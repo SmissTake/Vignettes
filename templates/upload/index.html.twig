@@ -1,20 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UploadController!{% endblock %}
+{% block title %}Upload{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/smisstake/Documents/SCHOOL/POO/Vignettes/src/Controller/UploadController.php'|file_link(0) }}">src/Controller/UploadController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/smisstake/Documents/SCHOOL/POO/Vignettes/templates/upload/index.html.twig'|file_link(0) }}">templates/upload/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <div class="pt-20 lg:px-40 flex flex-col">
+        <form action="" method="get" class="flex flex-col justify-end">
+            {% include 'components/dropzone.html.twig' %}
+            {% include 'components/textinput.html.twig' with {'placeholder': 'Titre'} %}
+            {% include 'components/textarea.html.twig' with {'placeholder': 'Description'} %}
+            {% include 'components/select.html.twig' with {'options': categories} %}
+            <div class="flex justify-end">
+                {% include 'components/submit.html.twig' with {'value': 'Upload'} %}
+            </div>
+        </form>
+    </div>
 {% endblock %}
