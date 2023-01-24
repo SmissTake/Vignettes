@@ -1,6 +1,6 @@
 {% block body %}
 
-<select required class="select w-full max-w-xs">
+<select required class="select select-bordered w-full">
   <option disabled selected>Categorie</option>
     {% for category in categories %}
       <option value="{{ category.id }}">{{ category.name }}</option>
