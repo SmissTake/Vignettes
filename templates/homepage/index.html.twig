@@ -3,7 +3,7 @@
 {% block title %}Hello HomePageController!{% endblock %}
 
 {% block body %}    
-    <div class="columns-3 md:columns-4 lg:columns-6 mx-20 pt-20">
+    <div class="columns-2 sm:columns-3 md:columns-4 lg:columns-5 xl:columns-6 lg:mx-20 pt-20">
         {% for media in medias %}
             {% include 'components/media.html.twig' with {'media': media} %}
         {% endfor %}
