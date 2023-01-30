@@ -13,10 +13,16 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        
         main:
             lazy: true
             provider: app_user_provider
             custom_authenticator: App\Security\LoginFormAuthenticator
+            entry_point: form_login
+            form_login:
+              login_path: app_sign_in
+              check_path: app_sign_in
+              enable_csrf: true
             logout:
                 path: app_logout
                 # where to redirect after logout
@@ -32,7 +38,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/app, roles: ROLE_USER }
 
 when@test:
     security:
