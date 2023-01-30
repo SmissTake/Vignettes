@@ -17,12 +17,23 @@ module.exports = {
   daisyui: {
     themes: [
       {
-        'blossom': {
+        'blossom-dark': {
           "primary": "#EB1A91",
           "secondary": "#f3f4f6",
           "accent": "#ffe4e6",
           "neutral": "#EB1A91",
           "base-100": "#131313",
+          "info": "#3ABFF8",
+          "success": "#36D399",
+          "warning": "#FBBD23",
+          "error": "#F87272",
+        },
+        'blossom-light': {
+          "primary": "#EB1A91",
+          "secondary": "#f3f4f6",
+          "accent": "#ffe4e6",
+          "neutral": "#EB1A91",
+          "base-100": "#FFFFFF",
           "info": "#3ABFF8",
           "success": "#36D399",
           "warning": "#FBBD23",
