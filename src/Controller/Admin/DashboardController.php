@@ -52,7 +52,15 @@ class DashboardController extends AbstractDashboardController
     //get number of active categories
     public function getActiveCategoryCount()
     {
-        $active_category_count = $this->categoriesRepository->count(['status' => '1']);
+        $query = $this->categoriesRepository
+        ->createQueryBuilder('c')
+        ->select('COUNT(c) as category_count')
+        ->leftJoin(Status::class, 's', 'WITH', 'c.status = s.id')
+        ->where('s.label = :label')
+        ->setParameter('label', 'actif')
+        ->getQuery();
+    
+        $active_category_count = $query->getSingleScalarResult();
         return $active_category_count;
     }
 
