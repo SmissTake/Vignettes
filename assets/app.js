@@ -19,7 +19,6 @@ document.getElementById('themeSwitch').addEventListener('change', function(event
 
 function storeTheme(theme) {
     window.localStorage.setItem('theme', theme);
-    console.log(window.localStorage.getItem('theme'));
 }
 
 function setTheme(theme) {
@@ -44,3 +43,17 @@ function setTheme(theme) {
         setTheme('blossom-light');
     }
 })();
+
+//Display character count of textarea in span #char-count
+if(document.getElementById('description-text-area')){
+    document.getElementById('description-text-area').addEventListener('input', function(event){
+        document.getElementById('char-count').innerHTML = document.getElementById('description-text-area').value.length + '/255';
+    
+        if (document.getElementById('description-text-area').value.length >= 255) {
+            document.getElementById('char-count').classList.add('text-rose-600');
+        }
+        else {
+            document.getElementById('char-count').classList.remove('text-rose-600');
+        }
+    });
+}

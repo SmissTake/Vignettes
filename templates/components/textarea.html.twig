@@ -1,9 +1,9 @@
 {% block body %}
 <div class="form-control mt-8">
-  <textarea class="textarea textarea-bordered" placeholder="{{ placeholder }}" maxlength="255"></textarea>
+  <textarea id="description-text-area" class="textarea textarea-bordered" placeholder="{{ placeholder }}" maxlength="255"></textarea>
   <label class="label">
   <span class="label-text-alt"></span>
-    <span class="label-text-alt">0/255</span>
+    <span id="char-count" class="label-text-alt">0/255</span>
   </label> 
 </div>
 {% endblock %}
