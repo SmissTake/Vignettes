@@ -45,11 +45,11 @@ function setTheme(theme) {
 })();
 
 //Display character count of textarea in span #char-count
-if(document.getElementById('description-text-area')){
-    document.getElementById('description-text-area').addEventListener('input', function(event){
-        document.getElementById('char-count').innerHTML = document.getElementById('description-text-area').value.length + '/255';
+if(document.getElementById('form_description')){
+    document.getElementById('form_description').addEventListener('input', function(event){
+        document.getElementById('char-count').innerHTML = document.getElementById('form_description').value.length + '/255';
     
-        if (document.getElementById('description-text-area').value.length >= 255) {
+        if (document.getElementById('form_description').value.length >= 255) {
             document.getElementById('char-count').classList.add('text-rose-600');
         }
         else {

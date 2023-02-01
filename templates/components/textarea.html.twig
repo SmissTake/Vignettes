@@ -1,6 +1,6 @@
 {% block body %}
 <div class="form-control mt-8">
-  <textarea id="description-text-area" class="textarea textarea-bordered" placeholder="{{ placeholder }}" maxlength="255"></textarea>
+  {{ form_widget(form.description, {'attr': {'class': 'textarea textarea-bordered', 'placeholder': placeholder, 'maxlength': 255}}) }}
   <label class="label">
   <span class="label-text-alt"></span>
     <span id="char-count" class="label-text-alt">0/255</span>

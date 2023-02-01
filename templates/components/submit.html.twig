@@ -1,5 +1,5 @@
 {% block body %}
 
-    <input required type="submit" value="{{ value }}" class="btn btn-sm shadow-3xl">
+    {{ form_widget(form.submit, {'attr': {'class': 'btn btn-sm shadow-3xl'}}) }}
 
 {% endblock %}
