@@ -12,12 +12,8 @@ class HomePageController extends AbstractController
     #[Route('/', name: 'homepage')]
     public function index(MediasRepository $mediasRepository)
     {
-        $query = $mediasRepository->createQueryBuilder('m')
-            ->join('m.status', 's')
-            ->where('s.label = :label')
-            ->setParameter('label', 'actif')
-            ->getQuery();
-        $medias = $query->getResult();
+        //Get medias from database that are active
+        $medias = $mediasRepository->getActive();
     
         //If no media found, throw an exception
         if (!$medias) {

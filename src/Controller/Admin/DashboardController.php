@@ -21,6 +21,7 @@ class DashboardController extends AbstractDashboardController
 {
     private $mediasRepository;
     private $usersRepository;
+    private $categoriesRepository;
 
     public function __construct(MediasRepository $mediasRepository, UsersRepository $usersRepository, CategoriesRepository $categoriesRepository)
     {
@@ -32,79 +33,12 @@ class DashboardController extends AbstractDashboardController
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
-        return $this->getData();
-    }
-
-    // get number of media
-    public function getMediaCount()
-    {
-        $media_count = $this->mediasRepository->count([]);
-        return $media_count;
-    }
-
-    //get number of user
-    public function getUserCount()
-    {
-        $user_count = $this->usersRepository->count([]);
-        return $user_count;
-    }
-
-    //get number of active categories
-    public function getActiveCategoryCount()
-    {
-        $query = $this->categoriesRepository
-        ->createQueryBuilder('c')
-        ->select('COUNT(c) as category_count')
-        ->leftJoin(Status::class, 's', 'WITH', 'c.status = s.id')
-        ->where('s.label = :label')
-        ->setParameter('label', 'actif')
-        ->getQuery();
-    
-        $active_category_count = $query->getSingleScalarResult();
-        return $active_category_count;
-    }
-
-    //get list of categories(name and id) ordered by number of media
-    public function getMediaByCategory()
-    {
-        $query = $this->categoriesRepository
-        ->createQueryBuilder('c')
-        ->select('c.id, c.name, s.label, COUNT(m) as media_count')
-        ->leftJoin(Medias::class, 'm', 'WITH', 'm.category = c.id')
-        ->leftJoin(Status::class, 's', 'WITH', 'c.status = s.id')
-        ->groupBy('c.id, c.name, s.label')
-        ->orderBy('media_count', 'DESC')
-        ->setMaxResults(6)
-        ->getQuery();
-    
-        $media_by_category = $query->getResult();
-        return $media_by_category;
-    }
-
-        //get list of user(mail and id) ordered by number of media
-        public function getMediaByUser()
-        {
-            $query = $this->usersRepository
-            ->createQueryBuilder('u')
-            ->select('u.id, u.email, COUNT(m) as media_count')
-            ->leftJoin(Medias::class, 'm', 'WITH', 'm.user = u.id')
-            ->groupBy('u.id, u.email')
-            ->orderBy('media_count', 'DESC')
-            ->setMaxResults(6)
-            ->getQuery();
-        
-            $media_by_user = $query->getResult();
-            return $media_by_user;
-        }
-
-    public function getData(): Response
-    {
         return $this->render('admin/dashboard.html.twig', [
-            'post_count' => $this->getMediaCount(),
-            'user_count' => $this->getUserCount(),
-            'active_category_count' => $this->getActiveCategoryCount(),
-            'media_by_category' => $this->getMediaByCategory(),
-            'media_by_user' => $this->getMediaByUser(), 
+            'post_count' => $this->mediasRepository->count([]),
+            'user_count' => $this->usersRepository->count([]),
+            'active_category_count' => $this->categoriesRepository->getActiveCategoryCount(),
+            'media_by_category' => $this->categoriesRepository->getMediaByCategory(),
+            'media_by_user' => $this->usersRepository->getMediaByUser(), 
         ]);
     }
 

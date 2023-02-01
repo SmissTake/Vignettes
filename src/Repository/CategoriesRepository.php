@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Categories;
+use App\Entity\Status;
+use App\Entity\Medias;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -39,28 +41,43 @@ class CategoriesRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Categories[] Returns an array of Categories objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function getActive(): array
+    {
+        return $this->createQueryBuilder('c')
+        ->join('c.status', 's')
+        ->where('s.label = :label')
+        ->setParameter('label', 'actif')
+        ->getQuery()
+        ->getResult();
+    }
 
-//    public function findOneBySomeField($value): ?Categories
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    //get number of active categories
+    public function getActiveCategoryCount()
+    {
+        $query = $this->createQueryBuilder('c')
+        ->select('COUNT(c) as category_count')
+        ->leftJoin(Status::class, 's', 'WITH', 'c.status = s.id')
+        ->where('s.label = :label')
+        ->setParameter('label', 'actif')
+        ->getQuery();
+    
+        $active_category_count = $query->getSingleScalarResult();
+        return $active_category_count;
+    }
+
+    //get list of categories(name and id) ordered by number of media
+    public function getMediaByCategory()
+    {
+        $query = $this->createQueryBuilder('c')
+        ->select('c.id, c.name, s.label, COUNT(m) as media_count')
+        ->leftJoin(Medias::class, 'm', 'WITH', 'm.category = c.id')
+        ->leftJoin(Status::class, 's', 'WITH', 'c.status = s.id')
+        ->groupBy('c.id, c.name, s.label')
+        ->orderBy('media_count', 'DESC')
+        ->setMaxResults(6)
+        ->getQuery();
+    
+        $media_by_category = $query->getResult();
+        return $media_by_category;
+    }
 }

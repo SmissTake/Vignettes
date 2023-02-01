@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Users;
+use App\Entity\Medias;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -39,28 +40,18 @@ class UsersRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Users[] Returns an array of Users objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('u.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Users
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    //get list of user(mail and id) ordered by number of media
+    public function getMediaByUser()
+    {
+        $query = $this->createQueryBuilder('u')
+        ->select('u.id, u.email, COUNT(m) as media_count')
+        ->leftJoin(Medias::class, 'm', 'WITH', 'm.user = u.id')
+        ->groupBy('u.id, u.email')
+        ->orderBy('media_count', 'DESC')
+        ->setMaxResults(6)
+        ->getQuery();
+    
+        $media_by_user = $query->getResult();
+        return $media_by_user;
+    }
 }

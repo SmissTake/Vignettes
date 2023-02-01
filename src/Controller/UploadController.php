@@ -26,12 +26,7 @@ class UploadController extends AbstractController
     public function index(Request $request, CategoriesRepository $categoriesRepository, MediasRepository $mediasRepository, UsersRepository $usersRepository): Response
     {
         //Get categories from database that are active
-        $query = $categoriesRepository->createQueryBuilder('c')
-            ->join('c.status', 's')
-            ->where('s.label = :label')
-            ->setParameter('label', 'actif')
-            ->getQuery();
-        $categories = $query->getResult();
+        $categories = $categoriesRepository->getActive();
         
         //If no category found, throw an exception
         if (!$categories) {
