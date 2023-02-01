@@ -5,7 +5,10 @@ namespace App\Entity;
 use App\Repository\MediasRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+#[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: MediasRepository::class)]
 class Medias
 {
@@ -33,8 +36,11 @@ class Medias
     private ?Status $status = null;
 
     #[ORM\Column(length: 255)]
-    #[Vich\UploadableField(mapping: 'medias', fileNameProperty: 'path')]
     private ?string $path = null;
+
+   // NOTE: This is not a mapped field of entity metadata, just a simple property.
+   #[Vich\UploadableField(mapping: 'medias', fileNameProperty: 'path')]
+   private ?File $imageFile = null;
 
     public function getId(): ?int
     {
@@ -101,6 +107,22 @@ class Medias
         return $this;
     }
 
+    public function setImageFile(?UploadedFile $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+    
     public function getPath(): ?string
     {
         return $this->path;

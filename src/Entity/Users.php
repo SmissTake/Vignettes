@@ -108,4 +108,9 @@ class Users
 
         return $this;
     }
+
+    public function getUsers(): ?Users
+    {
+        return $this;
+    }
 }
