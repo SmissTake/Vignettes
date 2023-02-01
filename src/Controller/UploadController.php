@@ -11,9 +11,10 @@ class UploadController extends AbstractController
 {
     #[Route('/upload', name: 'app_upload')]
     public function index(CategoriesRepository $categoriesRepository): Response
-    {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
-            
+    {            
+        if ($this->getUser()) {
+            // return $this->redirectToRoute('app_upload');
+
             //Get categories from database
             $categories = $categoriesRepository->findBy(['status' => '1']);
             
@@ -28,5 +29,9 @@ class UploadController extends AbstractController
                 'categories' => $categories,
             ]);
         
+        }
+        else{
+            return $this->redirectToRoute('app_login');
+        }
     }
 }
