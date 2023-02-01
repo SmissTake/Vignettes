@@ -31,7 +31,7 @@ class UploadController extends AbstractController
         
         }
         else{
-            // si user pas connecter
+            // si user pas coo
             return $this->redirectToRoute('app_login');
         }
     }
