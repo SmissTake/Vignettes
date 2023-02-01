@@ -9,6 +9,11 @@
 /vendor/
 ###< symfony/framework-bundle ###
 
+public/medias/images/
+node_modules/
+migrations/
+public/build/
+
 ###> phpunit/phpunit ###
 /phpunit.xml
 .phpunit.result.cache
