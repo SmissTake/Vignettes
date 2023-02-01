@@ -21,6 +21,7 @@ class DashboardController extends AbstractDashboardController
 {
     private $mediasRepository;
     private $usersRepository;
+    private $categoriesRepository;
 
     public function __construct(MediasRepository $mediasRepository, UsersRepository $usersRepository, CategoriesRepository $categoriesRepository)
     {
