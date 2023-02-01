@@ -10,6 +10,7 @@
   - [Première installation](#première-installation)
   - [Lancement](#lancement)
 - [Maquette](#maquette)
+- [Known issues](#known-issues)
 
 
 # Description du Projet
@@ -63,31 +64,36 @@ Un super utilisateur aura également la possibilité de configurer:
 # Installation
 
 ## Première installation
-copier le fichier .env.example en .env
+1. copier le fichier .env.example en .env
 
-creer une base de données 'vignettes'
+2. creer une base de données 'vignettes'
 
 ```shell
 composer install
 npm install
 ```
-Compilation des assets
+
+3. Compilation des assets
 ```shell
 yarn watch
 ```
-creer le fichier de migration
+
+4. creer le fichier de migration
 ```shell
-php bin/console make:migration
+php bin/console doctrine:migrations:generate
 ```
 
-migration de la base de données
+5. migration de la base de données
 ```shell
 symfony console doctrine:migrations:migrate
 ```
-fixtures
+
+6. fixtures
 ```shell
 symfony console doctrine:fixtures:load
 ```
+
+7. Pour l'instant, ajouter une image nommée 'ninja.jpg' dans le dossier public/medias/images
 ## Lancement
 ```shell
 symfony server:start
@@ -96,3 +102,23 @@ symfony server:start
 # Maquette
 
 https://www.figma.com/proto/tsunSghzUlNysFafKwyJ4G/Blossom?node-id=0%3A1
+
+
+# Known issues
+
+```
+In MetadataStorageError.php line 13:
+                                                                                                           
+  The metadata storage is not up to date, please run the sync-metadata-storage command to fix this issue.  
+                                                                                                           
+
+make:migration
+```
+Solution :
+```shell
+    php bin/console cache:clear
+    php bin/console doctrine:cache:clear-metadata
+    php bin/console cache:clear
+    php bin/console make:migration
+    php bin/console doctrine:migrations:migrate
+```
