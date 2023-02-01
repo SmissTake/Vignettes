@@ -5,10 +5,14 @@ namespace App\Entity;
 use App\Repository\UsersRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UsersRepository::class)]
-class Users
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+class Users implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -21,12 +25,16 @@ class Users
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 
+    #[ORM\Column]
     #[ORM\ManyToOne(inversedBy: 'users')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Roles $role = null;
+    private array $roles = [];
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Medias::class)]
     private Collection $medias;
+
+    #[ORM\Column(type: 'boolean')]
+    private $isVerified = false;
 
     public function __construct()
     {
@@ -55,6 +63,11 @@ class Users
         return $this;
     }
 
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
+
     public function getPassword(): ?string
     {
         return $this->password;
@@ -67,17 +80,40 @@ class Users
         return $this;
     }
 
-    public function getRole(): ?Roles
+    public function eraseCredentials()
     {
-        return $this->role;
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
-    public function setRole(?Roles $role): self
+    public function isVerified(): bool
     {
-        $this->role = $role;
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
 
         return $this;
     }
+
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->$roles = $roles;
+
+        return $this;
+    }
+
+
 
     /**
      * @return Collection<int, Medias>

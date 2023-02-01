@@ -60,7 +60,7 @@ class Roles
     {
         if (!$this->users->contains($user)) {
             $this->users->add($user);
-            $user->setRole($this);
+            $user->setRoles([$this]);
         }
 
         return $this;
@@ -70,8 +70,8 @@ class Roles
     {
         if ($this->users->removeElement($user)) {
             // set the owning side to null (unless already changed)
-            if ($user->getRole() === $this) {
-                $user->setRole(null);
+            if ($user->getRoles() === $this) {
+                $user->setRoles([]);
             }
         }
 

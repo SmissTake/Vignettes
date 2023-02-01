@@ -23,58 +23,29 @@ use Vich\UploaderBundle\Form\Type\VichImageType;
 class UploadController extends AbstractController
 {
     #[Route('/upload', name: 'app_upload')]
-    public function index(Request $request, CategoriesRepository $categoriesRepository, MediasRepository $mediasRepository, UsersRepository $usersRepository): Response
-    {
-        //Get categories from database that are active
-        $categories = $categoriesRepository->getActive();
+    public function index(CategoriesRepository $categoriesRepository): Response
+    {            
+        if ($this->getUser()) {
+            // return $this->redirectToRoute('app_upload');
+
+            //Get categories from database
+            $categories = $categoriesRepository->findBy(['status' => '1']);
+            
+            //If no category found, throw an exception
+            if (!$categories) {
+                throw $this->createNotFoundException(
+                    'No category found'
+                );
+            }
+    
+            return $this->render('upload/index.html.twig', [
+                'categories' => $categories,
+            ]);
         
-        //If no category found, throw an exception
-        if (!$categories) {
-            throw $this->createNotFoundException(
-                'No category found'
-            );
         }
-
-        $media = new Medias();
-
-        $form = $this->createFormBuilder($media)
-            ->add('imageFile', VichImageType::class)
-            ->add('title', TextType::class)
-            ->add('description', TextareaType::class, [
-                'required' => false
-            ])
-            ->add('category', ChoiceType::class, [
-                'choices'  => $categories,
-                'choice_label' => 'name'
-            ])
-            ->add('submit', SubmitType::class, [
-                'label' => 'Upload'
-            ])
-            ->getForm();
-
-        $form->handleRequest($request);
-
-        $user = new Users();
-        $user = $usersRepository->findOneBy(['id' => 3])->getUsers();
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            //Handle file upload
-            /** @var UploadedFile $file */
-            $file = $form['imageFile']->getData();
-            $filename = uniqid().'.'.$file->guessExtension();
-            $file->move($this->getParameter('media_directory'), $filename);
-            $media->setPath($filename);
-            $media->setUser($user); # FIX ME: find a way to get the connected user (and not user 3)
-            $media->setStatus($categoriesRepository->findOneBy(['id' => 3])->getStatus()); # FIX ME: find a way to get the status by label
-            $media->setImageFile(); # removing the reference of previous file preventing an issue
-            $mediasRepository->save($media, true);
-
-            return $this->redirectToRoute('homepage');
+        else{
+            // si user pas coo
+            return $this->redirectToRoute('app_login');
         }
-
-        return $this->render('upload/index.html.twig', [
-            'form' => $form->createView(),
-            'categories' => $categories,
-        ]);
     }
 }
