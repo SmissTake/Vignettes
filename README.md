@@ -1,5 +1,17 @@
 # Vignettes
 
+- [Vignettes](#vignettes)
+- [Description du Projet](#description-du-projet)
+  - [Contexte](#contexte)
+  - [Description de l'application](#description-de-lapplication)
+  - [Utilisateur connecté ayant le rôle USER](#utilisateur-connecté-ayant-le-rôle-user)
+  - [Utilisateur connecté ayant le rôle ADMIN](#utilisateur-connecté-ayant-le-rôle-admin)
+- [Installation](#installation)
+  - [Première installation](#première-installation)
+  - [Lancement](#lancement)
+- [Maquette](#maquette)
+
+
 # Description du Projet
 
 ## Contexte
@@ -47,3 +59,40 @@ Un super utilisateur aura également la possibilité de configurer:
  - Reglage de l'opacité du fond
  - Format des blocs possibles (en fonction du device)
 
+
+# Installation
+
+## Première installation
+copier le fichier .env.example en .env
+
+creer une base de données 'vignettes'
+
+```shell
+composer install
+npm install
+```
+Compilation des assets
+```shell
+yarn watch
+```
+creer le fichier de migration
+```shell
+php bin/console make:migration
+```
+
+migration de la base de données
+```shell
+symfony console doctrine:migrations:migrate
+```
+fixtures
+```shell
+symfony console doctrine:fixtures:load
+```
+## Lancement
+```shell
+symfony server:start
+```
+
+# Maquette
+
+https://www.figma.com/proto/tsunSghzUlNysFafKwyJ4G/Blossom?node-id=0%3A1
