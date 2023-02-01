@@ -9,9 +9,9 @@
     <label class="modal-box relative bg-transparent shadow-none md:flex items-center min-h-min  md:min-w-max" for="">
       <img src="medias/images/{{ media.path }}" alt="" class="img-fluid md:max-w-lg" loading="lazy">
       <div class="flex flex-col justify-center md:ml-8 w-auto">
-        <h3 class="text-center md:text-left text-lg font-bold">{{ media.title }}</h3>
-        <a href="/u/{{ media.user.id }}">@{{ media.user.id }}</a>
-        <p class="py-4">{{ media.description }}</p>
+        <h3 class="text-center md:text-left text-lg font-bold text-secondary">{{ media.title }}</h3>
+        <a href="/u/{{ media.user.id }}" class="underline text-secondary">@{{ media.user.id }}</a>
+        <p class="py-4 text-secondary">{{ media.description }}</p>
       </div>
     </label>
   </label>

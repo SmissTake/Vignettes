@@ -39,28 +39,13 @@ class MediasRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Medias[] Returns an array of Medias objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('m')
-//            ->andWhere('m.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('m.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Medias
-//    {
-//        return $this->createQueryBuilder('m')
-//            ->andWhere('m.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function getActive(): array
+    {
+        return $this->createQueryBuilder('m')
+            ->join('m.status', 's')
+            ->where('s.label = :label')
+            ->setParameter('label', 'actif')
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -144,4 +144,9 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getUsers(): ?Users
+    {
+        return $this;
+    }
 }
