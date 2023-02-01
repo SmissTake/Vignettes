@@ -1,13 +1,13 @@
 {% block body %}
 <div class="mb-4">
   <label for="modal-{{ media.id }}">
-      <img src="medias/images/{{ media.path }}" loading="lazy" class="rounded-lg hover:cursor-pointer">
+      <img src="/medias/images/{{ media.path }}" loading="lazy" class="rounded-lg hover:cursor-pointer">
   </label>
 
   <input type="checkbox" id="modal-{{ media.id }}" class="modal-toggle" />
   <label for="modal-{{ media.id }}" class="modal bg-black/75 cursor-pointer backdrop-blur-lg">
     <label class="modal-box relative bg-transparent shadow-none md:flex items-center min-h-min  md:min-w-max" for="">
-      <img src="medias/images/{{ media.path }}" alt="" class="img-fluid md:max-w-lg" loading="lazy">
+      <img src="/medias/images/{{ media.path }}" alt="" class="img-fluid md:max-w-lg" loading="lazy">
       <div class="flex flex-col justify-center md:ml-8 w-auto">
         <h3 class="text-center md:text-left text-lg font-bold text-secondary">{{ media.title }}</h3>
         <a href="/u/{{ media.user.id }}" class="underline text-secondary">@{{ media.user.id }}</a>
