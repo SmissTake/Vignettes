@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}blossom{% endblock %}
+
+{% block body %}    
+    <h2 class="mt-12 text-3xl text-center">@{{user_id}}</h2>
+    <div class="columns-2 sm:columns-3 md:columns-4 lg:columns-5 xl:columns-6 lg:mx-20 pt-20">
+        {% for media in medias %}
+            {% include 'components/media.html.twig' with {'media': media} %}
+        {% endfor %}
+    </div>
+{% endblock %}

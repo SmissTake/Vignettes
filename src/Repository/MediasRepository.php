@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Medias;
+use App\Entity\Status;
+use App\Entity\Users;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -47,5 +49,20 @@ class MediasRepository extends ServiceEntityRepository
             ->setParameter('label', 'actif')
             ->getQuery()
             ->getResult();
+    }
+
+    //get active media by user
+    public function getActiveByUser(int $id)
+    {
+        $query = $this->createQueryBuilder('m')
+            ->join('m.status', 's')
+            ->where('s.label = :label')
+            ->andWhere('m.user = :id')
+            ->setParameter('label', 'actif')
+            ->setParameter('id', $id)
+            ->getQuery();
+    
+        $media_by_user = $query->getResult();
+        return $media_by_user;
     }
 }
